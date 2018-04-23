@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #q1{text-decoration: none;font-size:30px;color:red;text-align: center;}
+
+
+    </style>
+</head>
+<body>
+<a href="fabiao">新文章</a>
+<a href="xiu">修改文章</a>
+{% for article in articles_List %}
+    <div id="z1"><a id="q1" href="{% url 'blog:article' article.id %}">{{ article.title }}</a></div>
+    <br><hr>
+{% endfor %}
+
+</body>
+</html>
