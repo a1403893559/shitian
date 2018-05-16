@@ -77,9 +77,10 @@ def login(request):
         upwd = s1.hexdigest()
         print(upwd)
         if upwd == list1[int(sy)]:
-            return render(request,'index.html')
+            return redirect('/goods/index/')
         else:
             return HttpResponse(request,'密码错误')
+
 
 
 

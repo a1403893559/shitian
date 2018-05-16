@@ -9,6 +9,7 @@ urlpatterns = [
    url(r'chuan/$',views.chuan),
    url(r'kan/$',views.kan),
    url(r'login/$',views.login),
-   url(r'dengl/',views.dengl)
+   url(r'dengl/',views.dengl),
+
 
 ]

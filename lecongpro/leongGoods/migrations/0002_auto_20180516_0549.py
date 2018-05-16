@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='goodsinfo',
             name='gpub_date',
-            field=models.DateTimeField(verbose_name=datetime.datetime(2018, 5, 15, 6, 46, 40, 228380)),
+            field=models.DateTimeField(verbose_name=datetime.datetime(2018, 5, 16, 5, 49, 13, 912336)),
         ),
     ]

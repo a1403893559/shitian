@@ -38,8 +38,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'userapp',
-    'leongGoods'
-    'ckeditor'
+    'leongGoods',
+    'ckeditor',
+    'ckeditor_uploader',
+
 
 )
 
@@ -114,4 +116,16 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 
 )
-MEDIA_ROOT = os.path.join(BASE_DIR,'static/media/')
+# MEDIA_ROOT = os.path.join(BASE_DIR,'static/media/')
+# CKEDITOR_UPLOAD_PATH = 'upload/'
+# CKEDITOR_IMAGE_BACKEND = "pillow"
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'Full',
+#     },
+# }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CKEDITOR_UPLOAD_PATH = 'upload/'
