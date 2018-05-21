@@ -4,7 +4,7 @@
 		<div class="navbar">
 			<h1 class="fl">全部商品分类</h1>
 			<ul class="navlist fl">
-				<li><a href="">首页</a></li>
+				<li><a href="/goods/index/">首页</a></li>
 				<li class="interval">|</li>
 				<li><a href="">手机生鲜</a></li>
 				<li class="interval">|</li>
@@ -14,12 +14,12 @@
 	</div>
 	<div class="center_con clearfix">
 		<ul class="subnav fl">
-			<li><a href="#model01" class="fruit">新鲜水果</a></li>
-			<li><a href="#model02" class="seafood">海鲜水产</a></li>
-			<li><a href="#model03" class="meet">猪牛羊肉</a></li>
-			<li><a href="#model04" class="egg">禽类蛋品</a></li>
-			<li><a href="#model05" class="vegetables">新鲜蔬菜</a></li>
-			<li><a href="#model06" class="ice">速冻食品</a></li>
+			<li><a href="/goods/gengduo/1/1/" class="fruit">新鲜水果</a></li>
+			<li><a href="/goods/gengduo/2/1/" class="seafood">海鲜水产</a></li>
+			<li><a href="/goods/gengduo/3/1/" class="meet">猪牛羊肉</a></li>
+			<li><a href="/goods/gengduo/4/1/" class="egg">禽类蛋品</a></li>
+			<li><a href="/goods/gengduo/5/1/" class="vegetables">新鲜蔬菜</a></li>
+			<li><a href="/goods/gengduo/6/1/" class="ice">速冻食品</a></li>
 		</ul>
 		<div class="slide fl">
 			<ul class="slide_pics">
@@ -43,14 +43,16 @@
 		<div class="list_title clearfix">
             {% for i in a1 %}
 			<h3 class="fl" id="model01">{{i.t_title}}</h3>
-            {% endfor %}
+
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
+
+
+				<a href="#">{{i.t_title}}</a>
+                {% endfor %}
+
 			</div>
-			<a href="/goods/gengduo/1/" class="goods_more fr" id="fruit_more">查看更多 ></a>
+			<a href="/goods/gengduo/1/1/" class="goods_more fr" id="fruit_more">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -59,8 +61,8 @@
             {% for i in a %}
 
                 <li>
-					<h4><a href="#">{{ i.gtitle}}</a></h4>
-					<a href="#">{{i.gpic|safe}}</a>
+					<h4><a href="/goods/detail/?a={{i.pk}}">{{ i.gtitle}}</a></h4>
+					<a href="/goods/detail/?a={{i.pk}}">{{i.gpic|safe}}</a>
 					<div class="prize">¥{{i.gprice}}</div>
 				</li>
 
@@ -74,13 +76,14 @@
 		<div class="list_title clearfix">
 			{% for i in a2 %}
 			<h3 class="fl" id="model01">{{i.t_title}}</h3>
-            {% endfor %}
+
 			<div class="subtitle fl">
-				<span>|</span>
-				<a href="#">河虾</a>
-				<a href="#">扇贝</a>				
+
+
+				<a href="#">{{i.t_title}}</a>
+                {% endfor %}
 			</div>
-			<a href="/goods/gengduo/2/" class="goods_more fr">查看更多 ></a>
+			<a href="/goods/gengduo/2/1/" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -89,8 +92,8 @@
 				{% for i in b %}
 
                 <li>
-					<h4><a href="#">{{ i.gtitle}}</a></h4>
-					<a href="#">{{i.gpic|safe}}</a>
+					<h4><a href="/goods/detail/?a={{i.pk}}">{{ i.gtitle}}</a></h4>
+					<a href="/goods/detail/?a={{i.pk}}">{{i.gpic|safe}}</a>
 					<div class="prize">¥{{i.gprice}}</div>
 				</li>
 
@@ -103,14 +106,15 @@
 		<div class="list_title clearfix">
 			{% for i in a3 %}
 			<h3 class="fl" id="model01">{{i.t_title}}</h3>
-            {% endfor %}
+
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
+
+
+				<a href="#">{{i.t_title}}</a>
+                {% endfor %}
 			</div>
-			<a href="/goods/gengduo/3/" class="goods_more fr">查看更多 ></a>
+			<a href="/goods/gengduo/3/1/" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -119,8 +123,8 @@
 				{% for i in c %}
 
                 <li>
-					<h4><a href="#">{{ i.gtitle}}</a></h4>
-					<a href="#">{{i.gpic|safe}}</a>
+					<h4><a href="/goods/detail/?a={{i.pk}}">{{ i.gtitle}}</a></h4>
+					<a href="/goods/detail/?a={{i.pk}}">{{i.gpic|safe}}</a>
 					<div class="prize">¥{{i.gprice}}</div>
 				</li>
 
@@ -133,14 +137,14 @@
 		<div class="list_title clearfix">
 			{% for i in a4 %}
 			<h3 class="fl" id="model01">{{i.t_title}}</h3>
-            {% endfor %}
+
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
+				<a href="#">{{ i.t_title }}</a>
+
 			</div>
-			<a href="/goods/gengduo/4/" class="goods_more fr">查看更多 ></a>
+             {% endfor %}
+			<a href="/goods/gengduo/4/1/" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -149,8 +153,8 @@
 				{% for i in d %}
 
                 <li>
-					<h4><a href="#">{{ i.gtitle}}</a></h4>
-					<a href="#">{{i.gpic|safe}}</a>
+					<h4><a href="/goods/detail/?a={{i.pk}}">{{ i.gtitle}}</a></h4>
+					<a href="/goods/detail/?a={{i.pk}}">{{i.gpic|safe}}</a>
 					<div class="prize">¥{{i.gprice}}</div>
 				</li>
 
@@ -163,14 +167,14 @@
 		<div class="list_title clearfix">
 			{% for i in a5 %}
 			<h3 class="fl" id="model01">{{i.t_title}}</h3>
-            {% endfor %}
+
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
+				<a href="#">{{ i.t_title }}</a>
+
 			</div>
-			<a href="/goods/gengduo/5/" class="goods_more fr">查看更多 ></a>
+            {% endfor %}
+			<a href="/goods/gengduo/5/1/" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -179,8 +183,8 @@
 				{% for i in e %}
 
                 <li>
-					<h4><a href="#">{{ i.gtitle}}</a></h4>
-					<a href="#">{{i.gpic|safe}}</a>
+					<h4><a href="/goods/detail/?a={{i.pk}}">{{ i.gtitle}}</a></h4>
+					<a href="/goods/detail/?a={{i.pk}}">{{i.gpic|safe}}</a>
 					<div class="prize">¥{{i.gprice}}</div>
 				</li>
 
@@ -193,14 +197,14 @@
 		<div class="list_title clearfix">
 			{% for i in a6 %}
 			<h3 class="fl" id="model01">{{i.t_title}}</h3>
-            {% endfor %}
+
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
+				<a href="#">{{i.t_title}}</a>
+
 			</div>
-			<a href="/goods/gengduo/6/" class="goods_more fr">查看更多 ></a>
+            {% endfor %}
+			<a href="/goods/gengduo/6/1/" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -209,8 +213,8 @@
 				{% for i in f %}
 
                 <li>
-					<h4><a href="#">{{ i.gtitle}}</a></h4>
-					<a href="#">{{i.gpic|safe}}</a>
+					<h4><a href="/goods/detail/?a={{i.pk}}">{{ i.gtitle}}</a></h4>
+					<a href="/goods/detail/?a={{i.pk}}">{{i.gpic|safe}}</a>
 					<div class="prize">¥{{i.gprice}}</div>
 				</li>
 

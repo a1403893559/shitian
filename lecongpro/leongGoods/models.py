@@ -25,3 +25,14 @@ class GoodsInfo(models.Model):
 
     def __str__(self):
         return self.gtitle
+
+class Gouwu(models.Model):
+    uname = models.CharField(max_length=40)
+    utitle = models.CharField(max_length=40)
+    unumber  = models.IntegerField()
+    ushu = models.IntegerField()
+    uprice = models.DecimalField(max_digits=5,decimal_places=2)
+    udanjia = models.DecimalField(max_digits=5,decimal_places=2)
+    upic = RichTextUploadingField()
+
+

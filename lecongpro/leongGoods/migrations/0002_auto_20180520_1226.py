@@ -12,9 +12,15 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AddField(
+            model_name='gouwu',
+            name='udanjia',
+            field=models.DecimalField(default=2, max_digits=5, decimal_places=2),
+            preserve_default=False,
+        ),
         migrations.AlterField(
             model_name='goodsinfo',
             name='gpub_date',
-            field=models.DateTimeField(verbose_name=datetime.datetime(2018, 5, 16, 5, 49, 13, 912336)),
+            field=models.DateTimeField(verbose_name=datetime.datetime(2018, 5, 20, 12, 26, 28, 102476)),
         ),
     ]

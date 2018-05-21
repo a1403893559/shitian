@@ -48,7 +48,12 @@ html,body{height:100%}
 .search_con .input_btn{
 	width:100px;height:38px;background-color:#37ab40;border:0px;font-size:14px;color:#fff;font-family:'Microsoft Yahei';outline:none;cursor:pointer;
 }
-
+#zr2{
+	width: 25px;height: 25px;
+}
+#zr3{
+	width: 25px;height: 25px;
+}
 .guest_cart{
 	width:200px;height:40px;margin-top:34px;
 }

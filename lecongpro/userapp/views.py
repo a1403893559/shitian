@@ -77,11 +77,14 @@ def login(request): #登录判断
         upwd = s1.hexdigest()
         print(upwd)
         if upwd == list1[int(sy)]:
+            request.session['uname'] = uname
             return redirect('/goods/index/')
         else:
-            return HttpResponse(request,'密码错误')
+            return render(request,'存在.html')
 
-
+def tuichu(request):
+    request.session.flush()
+    return redirect('/user/dengl/')
 
 
         

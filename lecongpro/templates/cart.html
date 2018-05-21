@@ -5,6 +5,7 @@
 	<title>乐农优选-购物车</title>
 	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.js"></script>
 </head>
 <body>
 	<div class="header_con">
@@ -12,18 +13,18 @@
 			<div class="welcome fl">欢迎来到乐农优选!</div>
 			<div class="fr">
 				<div class="login_info fl">
-					欢迎您：<em>张 山</em>
+					欢迎您：<em>{{uname|safe}}</em>
 				</div>
 				<div class="login_btn fl">
-					<a href="login.html">登录</a>
+					<a href="login.html">{{uname|safe}}</a>
 					<span>|</span>
-					<a href="register.html">注册</a>
+					<a href="register.html">{{ uuu|safe }}</a>
 				</div>
 				<div class="user_link fl">
 					<span>|</span>
 					<a href="user_center_info.html">用户中心</a>
 					<span>|</span>
-					<a href="cart.html">我的购物车</a>
+					<a href="cart.html">{{ chao|safe }}</a>
 					<span>|</span>
 					<a href="user_center_order.html">我的订单</a>
 				</div>
@@ -40,7 +41,7 @@
 		</div>		
 	</div>
 
-	<div class="total_count">全部商品<em>2</em>件</div>	
+	<div class="total_count">全部商品<em>{{ shu }}</em>件</div>
 	<ul class="cart_list_th clearfix">
 		<li class="col01">商品名称</li>
 		<li class="col02">商品单位</li>
@@ -49,45 +50,32 @@
 		<li class="col05">小计</li>
 		<li class="col06">操作</li>
 	</ul>
+    {% for i in suoyou %}
 	<ul class="cart_list_td clearfix">
-		<li class="col01"><input type="checkbox" name="" checked></li>
-		<li class="col02"><img src="/static/images/goods/goods012.jpg"></li>
-		<li class="col03">奇异果<br><em>25.80元/500g</em></li>
+		<li class="col01"><input type="checkbox" name="item" checked="true" onclick="dianji()" value="{{ i.uprice }}"></li>
+		<li class="col02">{{ i.upic|safe}}</li>
+		<li class="col03">{{ i.utitle }}<br><em>{{ i.udanjia }}元/500g</em></li>
 		<li class="col04">500g</li>
-		<li class="col05">25.80元</li>
+		<li class="col05">{{ i.udanjia }}元</li>
 		<li class="col06">
 			<div class="num_add">
 				<a href="javascript:;" class="add fl">+</a>
-				<input type="text" class="num_show fl" value="1">	
+				<input type="text" class="num_show fl" value="{{ i.ushu }}">
 				<a href="javascript:;" class="minus fl">-</a>	
 			</div>
 		</li>
-		<li class="col07">25.80元</li>
+		<li class="col07">{{ i.uprice }}元</li>
 		<li class="col08"><a href="javascript:;">删除</a></li>
 	</ul>
 
-	<ul class="cart_list_td clearfix">
-		<li class="col01"><input type="checkbox" name="" checked></li>
-		<li class="col02"><img src="/static/images/goods/goods003.jpg"></li>
-		<li class="col03">大兴大棚草莓<br><em>16.80元/500g</em></li>
-		<li class="col04">500g</li>
-		<li class="col05">16.80元</li>
-		<li class="col06">
-			<div class="num_add">
-				<a href="javascript:;" class="add fl">+</a>
-				<input type="text" class="num_show fl" value="1">	
-				<a href="javascript:;" class="minus fl">-</a>	
-			</div>
-		</li>
-		<li class="col07">16.80元</li>
-		<li class="col08"><a href="javascript:;">删除</a></li>
-	</ul>
+{% endfor %}
 	
 
 	<ul class="settlements">
-		<li class="col01"><input type="checkbox" name="" checked=""></li>
+		<li class="col01"><input type="checkbox" name="" checked="true"></li>
 		<li class="col02">全选</li>
-		<li class="col03">合计(不含运费)：<span>¥</span><em>42.60</em><br>共计<b>2</b>件商品</li>
+		<li class="col03">合计(不含运费)：<span>¥</span><em id="zr7"></em><br>共计<b>{{shu}}</b>件商品</li>
+        <input type="text" id="zonghe" value="{{ usum }}">
 		<li class="col04"><a href="place_order.html">去结算</a></li>
 	</ul>
 
@@ -104,6 +92,17 @@
 		<p>CopyRight © 2016 乐农优选信息技术有限公司 All Rights Reserved</p>
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
-	
+    {% for i in suoyou %}
+    <script type="text/javascript">
+    var panduan = $("#{{ i.id }}").is(":checked");
+    var p = document.getElementById('{{ i.id }}').checked;
+    var zonghe = document.getElementById('zonghe').value;
+    var price = {{ i.uprice }};
+function dianji() {
+var ch = document.getElementsByName('item');
+for (var) 
+
+    </script>
+{% endfor %}
 </body>
 </html>

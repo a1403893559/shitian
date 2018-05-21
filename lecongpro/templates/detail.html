@@ -1,4 +1,13 @@
 {% extends 'indexfu.html' %}
+{% block zrr %}
+    <div class="login_info fl" xmlns="http://www.w3.org/1999/html">
+					欢迎您：<em>{{uname}}</em>
+				</div>
+				<div class="login_btn fl">
+					{{ uname|safe}}
+					<span>|</span>
+					{{ uuu|safe}}
+{% endblock %}
 {% block fu1 %}
 	<div class="navbar_con">
 		<div class="navbar clearfix">
@@ -15,7 +24,7 @@
 				</ul>
 			</div>
 			<ul class="navlist fl">
-				<li><a href="">首页</a></li>
+				<li><a href="/goods/index/">首页</a></li>
 				<li class="interval">|</li>
 				<li><a href="">手机生鲜</a></li>
 				<li class="interval">|</li>
@@ -31,31 +40,41 @@
 		<span>></span>
 		<a href="#">商品详情</a>
 	</div>
-
+ {% for i in b %}
 	<div class="goods_detail_con clearfix">
-		<div class="goods_detail_pic fl"><img src="/static/images/goods_detail.jpg"></div>
+		<div class="goods_detail_pic fl">{{i.gpic|safe}}</div>
 
 		<div class="goods_detail_list fr">
-			<h3>大兴大棚草莓</h3>
-			<p>草莓浆果柔软多汁，味美爽口，适合速冻保鲜贮藏。草莓速冻后，可以保持原有的色、香、味，既便于贮藏，又便于外销。</p>
+			<h3>{{i.gtitle}}</h3>
+			<p>{{i.gjianjie|safe}}</p>
 			<div class="prize_bar">
-				<span class="show_pirze">¥<em>16.80</em></span>
-				<span class="show_unit">单  位：500g</span>
+				<span class="show_pirze">¥<em id="zr4">{{i.gprice}}</em></span>
+				<span class="show_unit">单  位：{{i.gunit}}g</span>
 			</div>
 			<div class="goods_num clearfix">
 				<div class="num_name fl">数 量：</div>
 				<div class="num_add fl">
-					<input type="text" class="num_show fl" value="1">
-					<a href="javascript:;" class="add fr">+</a>
-					<a href="javascript:;" class="minus fr">-</a>	
+                    <form action="/goods/jisuan/d={{i.id}}/" method="post">
+                        {% csrf_token %}
+					<input type="text" class="num_show fl" value="1" id="zr1" oninput="zr8()" name="number">
+					<input type="button" class="add fr" id="zr2" onclick="hs1()" value="+">
+					<input type="button" class="minus fr" id="zr3" onclick="hs2()" value="-">
+                        <input type="text" id="zr6" value="{{i.gprice}}" name="price">
+
 				</div> 
 			</div>
-			<div class="total">总价：<em>16.80元</em></div>
+            <div class="total">总价：<span id="zr5">{{ i.gprice }}元</span></div>
 			<div class="operate_btn">
-				<a href="javascript:;" class="buy_btn">立即购买</a>
-				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
+				<input type="submit" class="buy_btn" value="立即购买"> </form>
+                <form action="/goods/jiaru/f={{ i.id }}/" method="post">
+				<input type="submit" class="add_cart" id="add_cart" value="加入购物车" style="position: relative;left: 200px;top:-39px;">
+                        {% csrf_token %}
+					<input type="text"  value="1" id="buxianshi1"  name="ushuliang">
+                        <input type="text" id="buxianshi2" value="{{i.gprice}}" name="uprice">
+                    </form>
 			</div>
 		</div>
+
 	</div>
 
 	<div class="main_wrap clearfix">
@@ -69,7 +88,7 @@
 						<div class="prize">￥3.90</div>
 					</li>
 					<li>
-						<a href="#"><img src="/static/images/goods/goods002.jpg"></a>
+						<a href="#"><img src="/static/images/goods/45.jpg"></a>
 						<h4><a href="#">玫瑰香葡萄</a></h4>
 						<div class="prize">￥16.80</div>
 					</li>
@@ -86,16 +105,17 @@
 			<div class="tab_content">
 				<dl>
 					<dt>商品详情：</dt>
-					<dd>草莓采摘园位于北京大兴区 庞各庄镇四各庄村 ，每年1月-6月面向北京以及周围城市提供新鲜草莓采摘和精品礼盒装草莓，草莓品种多样丰富，个大香甜。所有草莓均严格按照有机标准培育，不使用任何化肥和农药。草莓在采摘期间免洗可以直接食用。欢迎喜欢草莓的市民前来采摘，也欢迎各大单位选购精品有机草莓礼盒，有机草莓礼盒是亲朋馈赠、福利送礼的最佳选择。 </dd>
+					<dd>{{i.gjianjie|safe}}</dd>
 				</dl>
 			</div>
 
 		</div>
 	</div>
+      {% endfor %}
 {% endblock %}
 
 {% block fu2 %}
-	<script type="text/javascript" src="/static/js/jquery-1.12.2.js"></script>
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 		var $add_x = $('#add_cart').offset().top;
 		var $add_y = $('#add_cart').offset().left;
@@ -115,5 +135,82 @@
 
 			});
 		})
+    document.getElementById("zr6").style.display="none";
+		document.getElementById("buxianshi1").style.display="none";
+		document.getElementById("buxianshi2").style.display="none";
+		document.getElementById('zr1').value = 1;
+
+        var b = document.getElementById("zr4").innerText;
+        var a = document.getElementById('zr1').value;
+        Number(a);
+
+        Number(b);
+         function zr8() {
+             var d = document.getElementById('zr1').value;
+
+            Number(d);
+            document.getElementById('zr1').value = d;
+		    var c = b*d;
+		    document.getElementById('buxianshi1').value = d;
+		    document.getElementById('buxianshi2').value = c;   
+		    c = c + '元';
+             document.getElementById('zr5').innerText = c;
+             document.getElementById('zr6').value = c;
+
+
+            }
+		function hs1() {
+var a = document.getElementById('zr1').value;
+var b = document.getElementById("zr4").innerText;
+		    var c = b;
+		    a = ++a;
+		    c = b*a;
+		           document.getElementById('buxianshi1').value = a;
+		           document.getElementById('buxianshi2').value = c;
+            c = c + '元';
+
+             document.getElementById('zr1').value = a;
+             document.getElementById('zr5').innerText = c;
+             document.getElementById('zr6').value = c;
+
+
+
+        }
+        function hs2() {
+var a = document.getElementById('zr1').value;
+var b = document.getElementById("zr4").innerText;
+		    a = --a;
+
+
+		    if (a<1){
+		        a = 1;
+
+		    c = b*a;
+		    document.getElementById('buxianshi1').value = a;
+		    document.getElementById('buxianshi2').value = c;
+            c = c + '元';
+		        document.getElementById('zr1').value = a;
+		        document.getElementById('zr5').innerText = c;
+		        document.getElementById('zr6').value = c;
+
+
+            }
+		    else{
+
+
+		    c = b*a;
+		    document.getElementById('buxianshi1').value = a;
+		    document.getElementById('buxianshi2').value = c;
+            c = c + '元';
+		        document.getElementById('zr1').value = a;
+		        document.getElementById('zr5').innerText = c;
+		        document.getElementById('zr6').value = c;
+
+
+            }
+
+        }
+
+
 	</script>
 {% endblock %}
