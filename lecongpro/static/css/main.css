@@ -1,6 +1,8 @@
 body{font-family:'Microsoft Yahei';font-size:12px;color:#666;}
 html,body{height:100%}
 /* 顶部样式 */
+#qw2{position: relative;left: 70px;top: -28px;width: 32px;}
+#qw1{width: 32px;}
 .header_con{
 	background-color:#f7f7f7;
 	height:29px;

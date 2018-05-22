@@ -1,6 +1,10 @@
 from django.shortcuts import render,redirect
 from leongGoods.models import *
 from django.core.paginator import *
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
+
 # Create your views here.
 import re
 def index(request):
@@ -322,6 +326,13 @@ def zhanshi(request):
     return render(request,'cart.html',
                   {'suoyou':suoyou,'shu':shu,'uname':uname,
                    'uuu':uuu,'chao':chao,'usum':usum})
+
+@csrf_exempt
+def chuli(request):
+    a = request.POST.get('a')
+    a = int(a) + 1
+
+    return JsonResponse({'a':a})
 
 
 

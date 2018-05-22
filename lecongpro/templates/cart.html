@@ -5,9 +5,57 @@
 	<title>乐农优选-购物车</title>
 	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
-<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+
+
+
+
+function checkAll() {
+var all=document.getElementById('chkAll');
+var one=document.getElementsByName('item');
+var a = document.getElementById('chkAll').checked;
+for(var i=0;i<one.length;i++){
+one[i].checked=all.checked;
+if (a==true){
+document.getElementById('zr7').innerText={{usum}}
+}
+else{
+    document.getElementById('zr7').innerText=0
+    }
+                            }
+}
+function calculateMoney() {
+  var sum = 0;
+  var chkItems = document.getElementsByName("item");
+  for (var i = 0; i < chkItems.length; i++) {
+    if (chkItems[i].checked) {
+      sum += parseInt(chkItems[i].value);
+    }
+  }
+  var sumMoneyObj = document.getElementById("zr7");
+  sumMoneyObj.innerText = sum;
+
+
+}
+
+
+function iniEvent() {
+  var chkItems = document.getElementsByName("item");
+
+
+  for (var i = 0; i < chkItems.length; i++) {
+    chkItems[i].onclick = calculateMoney;
+  }
+}
+
+</script>
 </head>
-<body>
+<body onload="iniEvent()">
 	<div class="header_con">
 		<div class="header">
 			<div class="welcome fl">欢迎来到乐农优选!</div>
@@ -52,16 +100,16 @@
 	</ul>
     {% for i in suoyou %}
 	<ul class="cart_list_td clearfix">
-		<li class="col01"><input type="checkbox" name="item" checked="true" onclick="dianji()" value="{{ i.uprice }}"></li>
+		<li class="col01"><input type="checkbox" name="item" checked="true" value="{{ i.uprice }}"></li>
 		<li class="col02">{{ i.upic|safe}}</li>
 		<li class="col03">{{ i.utitle }}<br><em>{{ i.udanjia }}元/500g</em></li>
 		<li class="col04">500g</li>
 		<li class="col05">{{ i.udanjia }}元</li>
 		<li class="col06">
 			<div class="num_add">
-				<a href="javascript:;" class="add fl">+</a>
-				<input type="text" class="num_show fl" value="{{ i.ushu }}">
-				<a href="javascript:;" class="minus fl">-</a>	
+				<input type="button" onclick="zr1()" id="qw1" class="zzh" class="add fl" value="+" >
+				<input type="text" class="num_show fl" value="{{ i.ushu }}" name="zhh">
+				<input type="button" onclick="zr2()" id="qw2" class="zrr" class="minus fl" value="-">
 			</div>
 		</li>
 		<li class="col07">{{ i.uprice }}元</li>
@@ -72,10 +120,9 @@
 	
 
 	<ul class="settlements">
-		<li class="col01"><input type="checkbox" name="" checked="true"></li>
+		<li class="col01"><input type="checkbox" name="全选" checked="true" id="chkAll" onclick="checkAll()"></li>
 		<li class="col02">全选</li>
-		<li class="col03">合计(不含运费)：<span>¥</span><em id="zr7"></em><br>共计<b>{{shu}}</b>件商品</li>
-        <input type="text" id="zonghe" value="{{ usum }}">
+		<li class="col03">合计(不含运费)：<span>¥</span><em id="zr7">{{ usum }}</em><br>共计<b id="qw5">{{shu}}</b>件商品</li>
 		<li class="col04"><a href="place_order.html">去结算</a></li>
 	</ul>
 
@@ -92,17 +139,21 @@
 		<p>CopyRight © 2016 乐农优选信息技术有限公司 All Rights Reserved</p>
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
-    {% for i in suoyou %}
+
     <script type="text/javascript">
-    var panduan = $("#{{ i.id }}").is(":checked");
-    var p = document.getElementById('{{ i.id }}').checked;
-    var zonghe = document.getElementById('zonghe').value;
-    var price = {{ i.uprice }};
-function dianji() {
-var ch = document.getElementsByName('item');
-for (var) 
+        var a = document.getElementsByName('zzh').value;
+        function zr1() {
+            $.post('/goods/chuli',{a:a},function (data) {
+                document.getElementsByName('zzh').value = data.a;
+            })
+
+        })
+
+
+
+
 
     </script>
-{% endfor %}
+
 </body>
 </html>

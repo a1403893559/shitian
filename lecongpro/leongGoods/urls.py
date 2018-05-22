@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'jisuan/d=(\d+)/$',views.jisuan),
     url(r'cart/$',views.cart),
     url(r'jiaru/f=(\d+)/$',views.jiaru),
-    url(r'zhanshi/$',views.zhanshi)
+    url(r'zhanshi/$',views.zhanshi),
+    url(r'chuli/$',views.chuli)
 ]
