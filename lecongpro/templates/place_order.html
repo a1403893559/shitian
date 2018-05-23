@@ -12,18 +12,18 @@
 			<div class="welcome fl">欢迎来到乐农优选!</div>
 			<div class="fr">
 				<div class="login_info fl">
-					欢迎您：<em>张 山</em>
+					欢迎您：<em>{{ uname|safe }}</em>
 				</div>
 				<div class="login_btn fl">
-					<a href="login.html">登录</a>
+					{{ uname|safe }}
 					<span>|</span>
-					<a href="register.html">注册</a>
+					{{ uuu|safe }}
 				</div>
 				<div class="user_link fl">
 					<span>|</span>
-					<a href="user_center_info.html">用户中心</a>
+					{{ zhongxin|safe }}
 					<span>|</span>
-					<a href="cart.html">我的购物车</a>
+					{{ chao|safe }}
 					<span>|</span>
 					<a href="user_center_order.html">我的订单</a>
 				</div>
@@ -93,7 +93,7 @@
 	<div class="common_list_con clearfix">
 		<div class="settle_con">
 			<div class="total_goods_count">共<em>{{a}}</em>件商品，总金额<b>{{ price }}元</b></div>
-			<div class="transit">运费：<b>10元</b></div>
+			<div class="transit"><b></b></div>
 			<div class="total_pay">实付款：<b>{{ price }}元</b></div>
 		</div>
 	</div>

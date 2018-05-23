@@ -1,4 +1,8 @@
 {% extends 'indexfu.html' %}
+{% block zzz %}
+			<a href="/goods/zhanshi/" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">{{ shu }}</div>
+            {% endblock %}
 {% block zrr %}
     <div class="login_info fl" xmlns="http://www.w3.org/1999/html">
 					欢迎您：<em>{{uname}}</em>
@@ -7,6 +11,10 @@
 					{{ uname|safe}}
 					<span>|</span>
 					{{ uuu|safe}}
+    <span>|</span>
+					{{ zhongxin|safe }}
+					<span>|</span>
+					{{ chao|safe}}
 {% endblock %}
 {% block fu1 %}
 	<div class="navbar_con">

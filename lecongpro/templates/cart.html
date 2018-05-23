@@ -5,14 +5,24 @@
 	<title>乐农优选-购物车</title>
 	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
+function jiesuan() {
+            var  a  = document.getElementsByName('item');
+           var b = a.length;
+        var c = [];
 
+            for (var i = 0;i<b;i++){
 
+                if(a[i].checked==true){
+                    c.push(i);
 
+                                        }
+                                    }
+
+document.getElementById('wan').value=c;
+
+                            }
 
 
 function checkAll() {
@@ -22,25 +32,47 @@ var a = document.getElementById('chkAll').checked;
 for(var i=0;i<one.length;i++){
 one[i].checked=all.checked;
 if (a==true){
-document.getElementById('zr7').innerText={{usum}}
+document.getElementById('zr7').innerText={{usum}};
+document.getElementById('qw5').innerText={{ shu }};
+document.getElementById('zr8').value={{usum}};
 }
 else{
-    document.getElementById('zr7').innerText=0
+    document.getElementById('zr7').innerText=0;
+    document.getElementById('zr8').value=0;
+    document.getElementById('qw5').innerText=0;
     }
                             }
 }
 function calculateMoney() {
+    var ll = 0;
   var sum = 0;
   var chkItems = document.getElementsByName("item");
   for (var i = 0; i < chkItems.length; i++) {
     if (chkItems[i].checked) {
       sum += parseInt(chkItems[i].value);
+        var c = [];
+
+            for (var h = 0;h<chkItems.length;h++){
+
+                if(chkItems[h].checked==true){
+                    c.push(h);
+
+                                        }
+                                    }
+
     }
   }
+
+
+  var su = c.length;
   var sumMoneyObj = document.getElementById("zr7");
   sumMoneyObj.innerText = sum;
-
-
+  document.getElementById('qw5').innerText=su;
+document.getElementById('chkAll').checked = false;
+if (c.length==chkItems.length){
+  document.getElementById('chkAll').checked = true;
+  }
+    document.getElementById('zr8').value=sum;
 }
 
 
@@ -49,7 +81,9 @@ function iniEvent() {
 
 
   for (var i = 0; i < chkItems.length; i++) {
+
     chkItems[i].onclick = calculateMoney;
+
   }
 }
 
@@ -64,15 +98,16 @@ function iniEvent() {
 					欢迎您：<em>{{uname|safe}}</em>
 				</div>
 				<div class="login_btn fl">
-					<a href="login.html">{{uname|safe}}</a>
+					{{uname|safe}}
 					<span>|</span>
 					<a href="register.html">{{ uuu|safe }}</a>
 				</div>
 				<div class="user_link fl">
 					<span>|</span>
-					<a href="user_center_info.html">用户中心</a>
+
+					{{ zhongxin|safe }}
 					<span>|</span>
-					<a href="cart.html">{{ chao|safe }}</a>
+					{{ chao|safe}}
 					<span>|</span>
 					<a href="user_center_order.html">我的订单</a>
 				</div>
@@ -100,19 +135,20 @@ function iniEvent() {
 	</ul>
     {% for i in suoyou %}
 	<ul class="cart_list_td clearfix">
-		<li class="col01"><input type="checkbox" name="item" checked="true" value="{{ i.uprice }}"></li>
+		<li class="col01"><input type="checkbox" name="item" checked="true" value="{{ i.uprice }}" onclick="zzz()"></li>
 		<li class="col02">{{ i.upic|safe}}</li>
 		<li class="col03">{{ i.utitle }}<br><em>{{ i.udanjia }}元/500g</em></li>
 		<li class="col04">500g</li>
-		<li class="col05">{{ i.udanjia }}元</li>
+		<li class="col05" id="qqq">{{ i.udanjia }}元</li>
 		<li class="col06">
 			<div class="num_add">
-				<input type="button" onclick="zr1()" id="qw1" class="zzh" class="add fl" value="+" >
-				<input type="text" class="num_show fl" value="{{ i.ushu }}" name="zhh">
-				<input type="button" onclick="zr2()" id="qw2" class="zrr" class="minus fl" value="-">
+                <a type="button"    class="add fl">+</a>
+				<input type="text" class="num_show fl" value="{{ i.ushu }}" name="zhh" id="qwe">
+                <a type="button"    class="minus fl">-</a>
 			</div>
 		</li>
-		<li class="col07">{{ i.uprice }}元</li>
+		<li class="col07 www">{{ i.uprice }}元</li>
+
 		<li class="col08"><a href="javascript:;">删除</a></li>
 	</ul>
 
@@ -122,8 +158,15 @@ function iniEvent() {
 	<ul class="settlements">
 		<li class="col01"><input type="checkbox" name="全选" checked="true" id="chkAll" onclick="checkAll()"></li>
 		<li class="col02">全选</li>
-		<li class="col03">合计(不含运费)：<span>¥</span><em id="zr7">{{ usum }}</em><br>共计<b id="qw5">{{shu}}</b>件商品</li>
-		<li class="col04"><a href="place_order.html">去结算</a></li>
+		<li class="col03">合计(不含运费)：<span>¥</span><em id="zr7">{{ usum }}</em><br>共计<b id="qw5" oninput="fff()">{{shu}}</b>件商品</li>
+		<li class="col04">
+            <form action="/goods/gwjs/" method="post">
+                {% csrf_token %}
+                <input type="text" value="{{ usum }}" name="sum" id="zr8" style="display: none">
+            <input type="text" value="c" name="c" id="wan" style="display: none">
+            <input type="submit" value="结算" onclick="jiesuan()" style="width: 150px;height: 78px;background-color: red;color: white;font-size: 20px;">
+            </form>
+        </li>
 	</ul>
 
 	<div class="footer">
@@ -140,14 +183,58 @@ function iniEvent() {
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
 
-    <script type="text/javascript">
-        var a = document.getElementsByName('zzh').value;
-        function zr1() {
-            $.post('/goods/chuli',{a:a},function (data) {
-                document.getElementsByName('zzh').value = data.a;
-            })
+    <script>
 
-        })
+{#        function jiesuan() {#}
+{#            var  a  = document.getElementsByName('item');#}
+{#           var b = a.length;#}
+{#        var c = [];#}
+{##}
+{#            for (var i = 0;i<b;i++){#}
+{##}
+{#                if(a[i].checked==true){#}
+{#                    c.push(i);#}
+{##}
+{#                                        }#}
+{#                                    }#}
+{#                                    alert(c)#}
+{#document.getElementById('wan').value=c;#}
+{##}
+{#                            }#}
+
+
+
+
+    $(".minus").click(function() {
+
+
+            var t = $(this).parent().find('#qwe');
+
+
+
+            for (var i=0;i<t.length;i++){
+            t.val(parseInt(t.val()) - 1);
+            if (t.val() <= 1) {
+                t.val(1);
+                                }
+
+
+                                        }
+                                }
+    )
+    // 数量加
+    $(".add").click(function() {
+            var t = $(this).parent().find('#qwe');
+            t.val(parseInt(t.val()) + 1);
+            if (t.val() <= 1) {
+                t.val(1);
+            }
+
+        }
+    )
+
+
+
 
 
 

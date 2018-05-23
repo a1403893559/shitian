@@ -10,8 +10,10 @@ urlpatterns = [
     url(r'moren/(\d+)/$',views.moren),
     url(r'detail/?a=(\d+)/$',views.detail),
     url(r'jisuan/d=(\d+)/$',views.jisuan),
-    url(r'cart/$',views.cart),
     url(r'jiaru/f=(\d+)/$',views.jiaru),
     url(r'zhanshi/$',views.zhanshi),
-    url(r'chuli/$',views.chuli)
+    url(r'chuli/$',views.chuli),
+    url(r'tiaoyong/$',views.tiaoyong),
+    url(r'gwjs/$',views.gwjs),
+
 ]
