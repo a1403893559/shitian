@@ -15,6 +15,8 @@
 					欢迎您：<em></em>
 				</div>
 				<div class="login_btn fl">
+                    <a href="/goods/index">商城首页</a>
+                <span>|</span>
 					{{ uname|safe }}
 					<span>|</span>
 					{{ uuu|safe }}
@@ -25,7 +27,7 @@
 					<span>|</span>
 					{{ chao|safe }}
 					<span>|</span>
-					<a href="user_center_order.html">我的订单</a>
+				{{ dingdan|safe }}
 				</div>
 			</div>
 		</div>		
@@ -44,18 +46,18 @@
 		<div class="left_menu_con clearfix">
 			<h3>用户中心</h3>
 			<ul>
-				<li><a href="user_center_info.html" class="active">· 个人信息</a></li>
-				<li><a href="user_center_order.html">· 全部订单</a></li>
-				<li><a href="user_center_site.html">· 收货地址</a></li>
+				<li><a href="/goods/tiaoyong/" class="active">· 个人信息</a></li>
+				<li><a href="/goods/dingdan/">· 全部订单</a></li>
+				<li><a href="/goods/dizhi/">· 收货地址</a></li>
 			</ul>
 		</div>
 		<div class="right_content clearfix">
 				<div class="info_con clearfix">
 				<h3 class="common_title2">基本信息</h3>
 						<ul class="user_info_list">
-							<li><span>用户名：</span></li>
-							<li><span>联系方式：</span></li>
-							<li><span>联系地址：</span></li>
+							<li>用户名：{{ cc.ureceive }}</li>
+							<li>联系方式：{{ cc.uphone }}</li>
+							<li>联系地址：{{ cc.uaddress }}</li>
 						</ul>
 				</div>
 				

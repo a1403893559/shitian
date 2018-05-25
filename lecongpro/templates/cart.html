@@ -1,246 +1,230 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>乐农优选-购物车</title>
-	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
-<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript">
-function jiesuan() {
-            var  a  = document.getElementsByName('item');
-           var b = a.length;
-        var c = [];
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>乐农优选-购物车</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
 
-            for (var i = 0;i<b;i++){
+        function jiesuan() {
+            var a = document.getElementsByName('item');
+            var b = a.length;
+            var c = [];
 
-                if(a[i].checked==true){
+            for (var i = 0; i < b; i++) {
+
+                if (a[i].checked == true) {
                     c.push(i);
 
-                                        }
-                                    }
-
-document.getElementById('wan').value=c;
-
-                            }
-
-
-function checkAll() {
-var all=document.getElementById('chkAll');
-var one=document.getElementsByName('item');
-var a = document.getElementById('chkAll').checked;
-for(var i=0;i<one.length;i++){
-one[i].checked=all.checked;
-if (a==true){
-document.getElementById('zr7').innerText={{usum}};
-document.getElementById('qw5').innerText={{ shu }};
-document.getElementById('zr8').value={{usum}};
-}
-else{
-    document.getElementById('zr7').innerText=0;
-    document.getElementById('zr8').value=0;
-    document.getElementById('qw5').innerText=0;
-    }
-                            }
-}
-function calculateMoney() {
-    var ll = 0;
-  var sum = 0;
-  var chkItems = document.getElementsByName("item");
-  for (var i = 0; i < chkItems.length; i++) {
-    if (chkItems[i].checked) {
-      sum += parseInt(chkItems[i].value);
-        var c = [];
-
-            for (var h = 0;h<chkItems.length;h++){
-
-                if(chkItems[h].checked==true){
-                    c.push(h);
-
-                                        }
-                                    }
-
-    }
-  }
-
-
-  var su = c.length;
-  var sumMoneyObj = document.getElementById("zr7");
-  sumMoneyObj.innerText = sum;
-  document.getElementById('qw5').innerText=su;
-document.getElementById('chkAll').checked = false;
-if (c.length==chkItems.length){
-  document.getElementById('chkAll').checked = true;
-  }
-    document.getElementById('zr8').value=sum;
-}
-
-
-function iniEvent() {
-  var chkItems = document.getElementsByName("item");
-
-
-  for (var i = 0; i < chkItems.length; i++) {
-
-    chkItems[i].onclick = calculateMoney;
-
-  }
-}
-
-</script>
-</head>
-<body onload="iniEvent()">
-	<div class="header_con">
-		<div class="header">
-			<div class="welcome fl">欢迎来到乐农优选!</div>
-			<div class="fr">
-				<div class="login_info fl">
-					欢迎您：<em>{{uname|safe}}</em>
-				</div>
-				<div class="login_btn fl">
-					{{uname|safe}}
-					<span>|</span>
-					<a href="register.html">{{ uuu|safe }}</a>
-				</div>
-				<div class="user_link fl">
-					<span>|</span>
-
-					{{ zhongxin|safe }}
-					<span>|</span>
-					{{ chao|safe}}
-					<span>|</span>
-					<a href="user_center_order.html">我的订单</a>
-				</div>
-			</div>
-		</div>		
-	</div>
-
-	<div class="search_bar clearfix">
-		<a href="index.html" class="logo fl"><img src="/static/images/logo.png"></a>
-		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;购物车</div>
-		<div class="search_con fr">
-			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
-			<input type="button" class="input_btn fr" name="" value="搜索">
-		</div>		
-	</div>
-
-	<div class="total_count">全部商品<em>{{ shu }}</em>件</div>
-	<ul class="cart_list_th clearfix">
-		<li class="col01">商品名称</li>
-		<li class="col02">商品单位</li>
-		<li class="col03">商品价格</li>
-		<li class="col04">数量</li>
-		<li class="col05">小计</li>
-		<li class="col06">操作</li>
-	</ul>
-    {% for i in suoyou %}
-	<ul class="cart_list_td clearfix">
-		<li class="col01"><input type="checkbox" name="item" checked="true" value="{{ i.uprice }}" onclick="zzz()"></li>
-		<li class="col02">{{ i.upic|safe}}</li>
-		<li class="col03">{{ i.utitle }}<br><em>{{ i.udanjia }}元/500g</em></li>
-		<li class="col04">500g</li>
-		<li class="col05" id="qqq">{{ i.udanjia }}元</li>
-		<li class="col06">
-			<div class="num_add">
-                <a type="button"    class="add fl">+</a>
-				<input type="text" class="num_show fl" value="{{ i.ushu }}" name="zhh" id="qwe">
-                <a type="button"    class="minus fl">-</a>
-			</div>
-		</li>
-		<li class="col07 www">{{ i.uprice }}元</li>
-
-		<li class="col08"><a href="javascript:;">删除</a></li>
-	</ul>
-
-{% endfor %}
-	
-
-	<ul class="settlements">
-		<li class="col01"><input type="checkbox" name="全选" checked="true" id="chkAll" onclick="checkAll()"></li>
-		<li class="col02">全选</li>
-		<li class="col03">合计(不含运费)：<span>¥</span><em id="zr7">{{ usum }}</em><br>共计<b id="qw5" oninput="fff()">{{shu}}</b>件商品</li>
-		<li class="col04">
-            <form action="/goods/gwjs/" method="post">
-                {% csrf_token %}
-                <input type="text" value="{{ usum }}" name="sum" id="zr8" style="display: none">
-            <input type="text" value="c" name="c" id="wan" style="display: none">
-            <input type="submit" value="结算" onclick="jiesuan()" style="width: 150px;height: 78px;background-color: red;color: white;font-size: 20px;">
-            </form>
-        </li>
-	</ul>
-
-	<div class="footer">
-		<div class="foot_link">
-			<a href="#">关于我们</a>
-			<span>|</span>
-			<a href="#">联系我们</a>
-			<span>|</span>
-			<a href="#">招聘人才</a>
-			<span>|</span>
-			<a href="#">友情链接</a>		
-		</div>
-		<p>CopyRight © 2016 乐农优选信息技术有限公司 All Rights Reserved</p>
-		<p>电话：010-****888    京ICP备*******8号</p>
-	</div>
-
-    <script>
-
-{#        function jiesuan() {#}
-{#            var  a  = document.getElementsByName('item');#}
-{#           var b = a.length;#}
-{#        var c = [];#}
-{##}
-{#            for (var i = 0;i<b;i++){#}
-{##}
-{#                if(a[i].checked==true){#}
-{#                    c.push(i);#}
-{##}
-{#                                        }#}
-{#                                    }#}
-{#                                    alert(c)#}
-{#document.getElementById('wan').value=c;#}
-{##}
-{#                            }#}
-
-
-
-
-    $(".minus").click(function() {
-
-
-            var t = $(this).parent().find('#qwe');
-
-
-
-            for (var i=0;i<t.length;i++){
-            t.val(parseInt(t.val()) - 1);
-            if (t.val() <= 1) {
-                t.val(1);
-                                }
-
-
-                                        }
-                                }
-    )
-    // 数量加
-    $(".add").click(function() {
-            var t = $(this).parent().find('#qwe');
-            t.val(parseInt(t.val()) + 1);
-            if (t.val() <= 1) {
-                t.val(1);
+                }
             }
 
+            document.getElementById('wan').value = c;
+
         }
-    )
 
 
+        function checkAll() {
+            var all = document.getElementById('chkAll');
+            var one = document.getElementsByName('item');
+            var a = document.getElementById('chkAll').checked;
+            for (var i = 0; i < one.length; i++) {
+                one[i].checked = all.checked;
+                if (a == true) {
+                    document.getElementById('zr7').innerText ={{usum}};
+                    document.getElementById('qw5').innerText ={{ shu }};
+                    document.getElementById('zr8').value ={{usum}};
+                }
+                else {
+                    document.getElementById('zr7').innerText = 0;
+                    document.getElementById('zr8').value = 0;
+                    document.getElementById('qw5').innerText = 0;
+                }
+            }
+        }
+
+        function calculateMoney() {
+            var ll = 0;
+            var sum = 0;
+            var chkItems = document.getElementsByName("item");
+            for (var i = 0; i < chkItems.length; i++) {
+                if (chkItems[i].checked) {
+                    sum += parseInt(chkItems[i].value);
+                    var c = [];
+
+                    for (var h = 0; h < chkItems.length; h++) {
+
+                        if (chkItems[h].checked == true) {
+                            c.push(h);
+
+                        }
+                    }
+
+                }
+            }
 
 
+            var su = c.length;
+            var sumMoneyObj = document.getElementById("zr7");
+            sumMoneyObj.innerText = sum;
+            document.getElementById('qw5').innerText = su;
+            document.getElementById('chkAll').checked = false;
+            if (c.length == chkItems.length) {
+                document.getElementById('chkAll').checked = true;
+            }
+            document.getElementById('zr8').value = sum;
+        }
 
 
+        function iniEvent() {
+            var chkItems = document.getElementsByName("item");
+
+
+            for (var i = 0; i < chkItems.length; i++) {
+                chkItems[i].onclick = calculateMoney
+            }
+
+
+        }
 
 
     </script>
+</head>
+<body onload="iniEvent();haha()">
+<div class="header_con">
+    <div class="header">
+        <div class="welcome fl">欢迎来到乐农优选!</div>
+        <div class="fr">
+            <div class="login_info fl">
+                欢迎您：<em>{{ uname|safe }}</em>
+            </div>
+            <div class="login_btn fl">
+                <a href="/goods/index">商城首页</a>
+                <span>|</span>
+                {{ uname|safe }}
+                <span>|</span>
+                <a href="register.html">{{ uuu|safe }}</a>
+            </div>
+            <div class="user_link fl">
+                <span>|</span>
+
+                {{ zhongxin|safe }}
+                <span>|</span>
+                {{ chao|safe }}
+                <span>|</span>
+                {{ dingdan|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="search_bar clearfix">
+    <a href="index.html" class="logo fl"><img src="/static/images/logo.png"></a>
+    <div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;购物车</div>
+    <div class="search_con fr">
+        <input type="text" class="input_text fl" name="" placeholder="搜索商品">
+        <input type="button" class="input_btn fr" name="" value="搜索">
+    </div>
+</div>
+
+<div class="total_count">全部商品<em>{{ shu }}</em>件</div>
+<ul class="cart_list_th clearfix">
+    <li class="col01">商品名称</li>
+    <li class="col02">商品单位</li>
+    <li class="col03">商品价格</li>
+    <li class="col04">数量</li>
+    <li class="col05">小计</li>
+    <li class="col06">操作</li>
+</ul>
+{% for i in suoyou %}
+    <ul class="cart_list_td clearfix">
+        <li class="col01"><input type="checkbox" name="item" checked="true" value="{{ i.uprice }}" onclick="zzz()"></li>
+        <li class="col02">{{ i.upic|safe }}</li>
+        <li class="col03">{{ i.utitle }}<br><em id="em">{{ i.udanjia }}元/500g</em></li>
+        <li class="col04">500g</li>
+        <li class="col05" name="qqq" id="qqq">{{ i.udanjia }}元</li>
+        <li class="col06">
+            <div class="num_add">
+                <a type="button" class="add fl" name="add" id="add">+</a>
+                <input type="text" class="num_show fl" value="{{ i.ushu }}" name="zhh" id="qwe">
+                <a type="button" class="minus fl" name="minus" id="minus">-</a>
+            </div>
+        </li>
+        <li class="col07 www" name="www" id="www">{{ i.uprice }}元</li>
+
+        <li class="col08"><a href="javascript:;">删除</a></li>
+    </ul>
+
+{% endfor %}
+
+
+<ul class="settlements">
+    <li class="col01"><input type="checkbox" name="全选" checked="true" id="chkAll" onclick="checkAll()"></li>
+    <li class="col02">全选</li>
+    <li class="col03">合计(不含运费)：<span>¥</span><em id="zr7">{{ usum }}</em><br>共计<b id="qw5" oninput="fff()">{{ shu }}</b>件商品
+    </li>
+    <li class="col04">
+        <form action="/goods/gwjs/" method="post">
+            {% csrf_token %}
+            <input type="text" value="{{ usum }}" name="sum" id="zr8" style="display: none">
+            <input type="text" value="c" name="c" id="wan" style="display: none">
+            <input type="submit" value="结算" onclick="jiesuan()"
+                   style="width: 150px;height: 78px;background-color: red;color: white;font-size: 20px;">
+        </form>
+    </li>
+</ul>
+
+<div class="footer">
+    <div class="foot_link">
+        <a href="#">关于我们</a>
+        <span>|</span>
+        <a href="#">联系我们</a>
+        <span>|</span>
+        <a href="#">招聘人才</a>
+        <span>|</span>
+        <a href="#">友情链接</a>
+    </div>
+    <p>CopyRight © 2016 乐农优选信息技术有限公司 All Rights Reserved</p>
+    <p>电话：010-****888 京ICP备*******8号</p>
+</div>
+
+<script>
+    function haha() {
+
+        var c = document.getElementsByName('minus');
+        var b = document.getElementsByName('add');
+        for (var i = 0; i < c.length; i++) {
+            b[i].onclick = function () {
+
+
+                var t = $(this).parent().find('#qwe');
+                t.val(parseInt(t.val()) + 1);
+
+
+                if (t.val() <= 1) {
+                    t.val(1)
+                }
+
+            }
+
+            c[i].onclick = function () {
+                var t = $(this).parent().find('#qwe');
+                t.val(parseInt(t.val()) - 1);
+                if (t.val() <= 1) {
+                    t.val(1)
+                }
+
+            }
+
+
+        }
+
+    }
+
+
+</script>
 
 </body>
 </html>

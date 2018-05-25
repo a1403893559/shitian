@@ -2,11 +2,14 @@ from django.shortcuts import render,redirect
 from leongGoods.models import *
 from django.core.paginator import *
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 shu = 0
-
+from userapp.models import *
+import random
+import json
 # Create your views here.
 import re
+
 def index(request):
     a = GoodsInfo.objects.filter(gtype=1)
     a = a[0:4:1]
@@ -32,18 +35,21 @@ def index(request):
         uuu = '<a href="/user/tuichu/">退出</a>'
         chao = '<a href="/goods/zhanshi/">购物车</a>'
         zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+        dingdan = '<a href="/goods/dingdan/">全部订单</a>'
         suoyou = Gouwu.objects.filter(uname=uname)
         shu = len(suoyou)
 
         context = {'a':a,'b':b,'c':c,'d':d,'e':e,'f':f,'a1':a1,'a2':a2,'a3':a3,'a4':a4,
-                   'a5':a5,'a6':a6,'uname':uname,'uuu':uuu,'chao':chao,'zhongxin':zhongxin,'shu':shu}
+                   'a5':a5,'a6':a6,'dingdan':dingdan,'uname':uname,'uuu':uuu,'chao':chao,'zhongxin':zhongxin,'shu':shu}
     else:
         uname = '<a href="/user/dengl/">登录</a>'
         uuu = '<a href="/user/register/">注册</a>'
         chao = '<a href="/user/dengl/">购物车</a>'
         zhongxin = '<a href="/user/dengl/">用户中心</a>'
+        dingdan = '<a href="/user/dengl/">全部订单</a>'
+        shu = []
         context = {'a': a, 'b': b, 'c': c, 'd': d, 'e': e, 'f': f, 'a1': a1,
-                   'a2': a2, 'a3': a3, 'a4': a4, 'a5': a5,'a6': a6, 'uname': uname,'uuu':uuu,'chao':chao,'zhongxin':zhongxin}
+                   'a2': a2, 'a3': a3,'dingdan':dingdan, 'a4': a4, 'a5': a5,'a6': a6, 'uname': uname,'uuu':uuu,'chao':chao,'zhongxin':zhongxin}
     return render(request,'index.html',context)
 def cart(request):
     return render(request,'cart.html')
@@ -63,6 +69,7 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -70,8 +77,10 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
         return render(request,'list.html',{'b':page,'a':a,'c':c,
-                                           'uname':uname,'uuu':uuu,'shu':shu,'chao':chao,'zhongxin':zhongxin})
+                                           'uname':uname,'dingdan':dingdan,'uuu':uuu,'shu':shu,'chao':chao,'zhongxin':zhongxin})
     elif int(a) == 2:
         b = GoodsInfo.objects.filter(gtype=2)
         paginator = Paginator(b, 1)
@@ -82,14 +91,18 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
+
             shu = len(suoyou)
         else:
             uname = '<a href="/user/dengl/">登录</a>'
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':page,'a':a,'c':c,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':page,'a':a,'c':c,
                                            'uname':uname,'uuu':uuu,'shu':shu,'chao':chao,'zhongxin':zhongxin})
     elif int(a) == 3:
         b = GoodsInfo.objects.filter(gtype=3)
@@ -101,6 +114,7 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -108,7 +122,9 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':page,'a':a,'c':c,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':page,'a':a,'c':c,
                                            'uname':uname,'uuu':uuu,'shu':shu,'chao':chao,'zhongxin':zhongxin})
     elif int(a) == 4:
         b = GoodsInfo.objects.filter(gtype=4)
@@ -120,6 +136,7 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -127,7 +144,9 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':page,'a':a,'c':c,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':page,'a':a,'c':c,
                                            'uname':uname,'uuu':uuu,'shu':shu,'chao':chao,'zhongxin':zhongxin})
 
     elif int(a) == 5:
@@ -140,6 +159,7 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -147,7 +167,9 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':page,'a':a,'c':c,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':page,'a':a,'c':c,
                                            'uname':uname,'uuu':uuu,'shu':shu,'chao':chao,'zhongxin':zhongxin})
 
     elif int(a) == 6:
@@ -160,6 +182,7 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -167,7 +190,9 @@ def gengduo(request,a,pindex='1'):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':page,'a':a,'c':c,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':page,'a':a,'c':c,
                                            'uname':uname,'uuu':uuu,'shu':shu,'chao':chao,'zhongxin':zhongxin})
 
 def price(request,a):
@@ -178,6 +203,7 @@ def price(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -185,7 +211,9 @@ def price(request,a):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin,'shu':shu})
     elif int(a) == 2:
         b = GoodsInfo.objects.filter(gtype=2).order_by('-gprice')
@@ -194,6 +222,7 @@ def price(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -201,7 +230,9 @@ def price(request,a):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'shu':shu,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'shu':shu,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
     elif int(a) == 3:
         b = GoodsInfo.objects.filter(gtype=3).order_by('-gprice')
@@ -210,6 +241,7 @@ def price(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -217,7 +249,9 @@ def price(request,a):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'shu':shu,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'shu':shu,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
 
     elif int(a) == 4:
@@ -227,6 +261,7 @@ def price(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -234,7 +269,9 @@ def price(request,a):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'shu':shu,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'shu':shu,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
 
     elif int(a) == 5:
@@ -244,6 +281,7 @@ def price(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -251,7 +289,9 @@ def price(request,a):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'shu':shu,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'shu':shu,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
 
     elif int(a) == 6:
@@ -261,6 +301,7 @@ def price(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
             suoyou = Gouwu.objects.filter(uname=uname)
             shu = len(suoyou)
         else:
@@ -268,7 +309,9 @@ def price(request,a):
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'shu':shu,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+            shu = []
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'shu':shu,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
 
 def moren(request,a):
@@ -281,12 +324,14 @@ def moren(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
         else:
             uname = '<a href="/user/dengl/">登录</a>'
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
     elif int(a) == 2:
         b = GoodsInfo.objects.filter(gtype=2)
@@ -295,12 +340,14 @@ def moren(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
         else:
             uname = '<a href="/user/dengl/">登录</a>'
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
     elif int(a) == 3:
         b = GoodsInfo.objects.filter(gtype=3)
@@ -309,12 +356,14 @@ def moren(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
         else:
             uname = '<a href="/user/dengl/">登录</a>'
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
     elif int(a) == 4:
         b = GoodsInfo.objects.filter(gtype=4)
@@ -323,12 +372,14 @@ def moren(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
         else:
             uname = '<a href="/user/dengl/">登录</a>'
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
 
     elif int(a) == 5:
@@ -338,12 +389,14 @@ def moren(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
         else:
             uname = '<a href="/user/dengl/">登录</a>'
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
 
     elif int(a) == 6:
@@ -353,12 +406,14 @@ def moren(request,a):
             uuu = '<a href="/user/tuichu/">退出</a>'
             chao = '<a href="/goods/zhanshi/">购物车</a>'
             zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+            dingdan = '<a href="/goods/dingdan/">全部订单</a>'
         else:
             uname = '<a href="/user/dengl/">登录</a>'
             uuu = '<a href="/user/register/">注册</a>'
             chao = '<a href="/user/dengl/">购物车</a>'
             zhongxin = '<a href="/user/dengl/">用户中心</a>'
-        return render(request,'list.html',{'b':b,'a':a,'uname':uname,
+            dingdan = '<a href="/user/dengl/">全部订单</a>'
+        return render(request,'list.html',{'dingdan':dingdan,'b':b,'a':a,'uname':uname,
                         'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
 
 
@@ -376,14 +431,17 @@ def detail(request):
         uuu = '<a href="/user/tuichu/">退出</a>'
         chao = '<a href="/goods/zhanshi/">购物车</a>'
         zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+        dingdan = '<a href="/goods/dingdan/">全部订单</a>'
         suoyou = Gouwu.objects.filter(uname=uname)
         shu = len(suoyou)
     else:
         uname = '<a href="/user/dengl/">登录</a>'
         uuu = '<a href="/user/register/">注册</a>'
-        chao = '<a href="/user/deng;/">购物车</a>'
+        chao = '<a href="/user/dengl/">购物车</a>'
         zhongxin = '<a href="/user/dengl/">用户中心</a>'
-    return render(request,'detail.html',{'b':b,'d':d,'uname':uname,'shu':shu,'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
+        dingdan = '<a href="/user/dengl/">全部订单</a>'
+        shu = []
+    return render(request,'detail.html',{'dingdan':dingdan,'b':b,'d':d,'uname':uname,'shu':shu,'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
 
 def jisuan(request,d):
     print(d)
@@ -400,12 +458,14 @@ def jisuan(request,d):
         uuu = '<a href="/user/tuichu/">退出</a>'
         chao = '<a href="/goods/zhanshi/">购物车</a>'
         zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+        dingdan = '<a href="/goods/dingdan/">全部订单</a>'
     else:
         uname = '<a href="/user/dengl/">登录</a>'
         uuu = '<a href="/user/register/">注册</a>'
         chao = '<a href="/user/dengl/">购物车</a>'
-        zhongxin = '<a href="/user/tiaoyong/">用户中心</a>'
-    return render(request,'place_order.html',{'number':number,'price':price,'b':b,'a':a,'uname':uname,'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
+        zhongxin = '<a href="/user/dengl/">用户中心</a>'
+        dingdan = '<a href="/user/dengl/">全部订单</a>'
+    return render(request,'place_order.html',{'dingdan':dingdan,'number':number,'price':price,'b':b,'a':a,'uname':uname,'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
 
 
 def jiaru(request,f):
@@ -446,11 +506,13 @@ def zhanshi(request):
         uuu = '<a href="/user/tuichu/">退出</a>'
         chao = '<a href="/goods/zhanshi/">购物车</a>'
         zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+        dingdan = '<a href="/goods/dingdan/">全部订单</a>'
     else:
         uname = '<a href="/user/dengl/">登录</a>'
         uuu = '<a href="/user/register/">注册</a>'
         chao = '<a href="/user/dengl/">购物车</a>'
         zhongxin = '<a href="/user/dengl/">用户中心</a>'
+        dingdan = '<a href="/user/dengl/">全部订单</a>'
     suoyou = Gouwu.objects.filter(uname=uname)
 
     print(suoyou)
@@ -461,8 +523,8 @@ def zhanshi(request):
     shu = len(suoyou)
     shu = int(shu)
     return render(request,'cart.html',
-                  {'suoyou':suoyou,'shu':shu,'uname':uname,
-                   'uuu':uuu,'chao':chao,'usum':usum,'zhongxin':zhongxin})
+                  {'suoyou':suoyou,'dingdan':dingdan,'shu':shu,'uname':uname,
+                   'uuu':uuu,'chao':chao,'usum':usum,'zhongxin':zhongxin,'List':suoyou})
 
 @csrf_exempt
 def chuli(request):
@@ -472,17 +534,22 @@ def chuli(request):
     return JsonResponse({'a':a})
 
 def tiaoyong(request):
+
     if request.session.get('uname') is not None:
         uname = request.session.get('uname')
         uuu = '<a href="/user/tuichu/">退出</a>'
         chao = '<a href="/goods/zhanshi/">购物车</a>'
         zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+        dingdan = '<a href="/goods/dingdan/">全部订单</a>'
     else:
         uname = '<a href="/user/dengl/">登录</a>'
         uuu = '<a href="/user/register/">注册</a>'
         chao = '<a href="/user/dengl/">购物车</a>'
         zhongxin = '<a href="/user/dengl/">用户中心</a>'
-    return render(request,'user_center_info.html',{'uname':uname,'uuu':uuu,'chao':chao,'zhongxin':zhongxin})
+        dingdan = '<a href="/user/dengl/">全部订单</a>'
+    dui = UserInfo.objects.filter(uname=uname)
+    cc = dui[0]
+    return render(request,'user_center_info.html',{'dingdan':dingdan,'uname':uname,'uuu':uuu,'chao':chao,'zhongxin':zhongxin,'cc':cc})
 
 
 def gwjs(request):
@@ -502,15 +569,155 @@ def gwjs(request):
         uuu = '<a href="/user/tuichu/">退出</a>'
         chao = '<a href="/goods/zhanshi/">购物车</a>'
         zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+        dingdan = '<a href="/goods/dingdan/">全部订单</a>'
     else:
         uname = '<a href="/user/dengl/">登录</a>'
         uuu = '<a href="/user/register/">注册</a>'
         chao = '<a href="/user/dengl/">购物车</a>'
-        zhongxin = '<a href="/user/tiaoyong/">用户中心</a>'
+        zhongxin = '<a href="/user/dengl/">用户中心</a>'
+        dingdan = '<a href="/user/dengl/">全部订单</a>'
     suoyou = Gouwu.objects.filter(uname=uname)
     shu = len(a)
     for i in a:
         b.append(suoyou[int(i)])
 
+    dui = UserInfo.objects.filter(uname=uname)
+    cc = dui[0]
 
-    return render(request,'gwjs.html',{'uname':uname,'uuu':uuu,'chao':chao,'zhongxin':zhongxin,'b':b,'shu':shu,'price':price,'sum':price})
+    return render(request,'gwjs.html',{'dingdan':dingdan,'uname':uname,'uuu':uuu,'chao':chao,
+        'zhongxin':zhongxin,'b':b,'shu':shu,'price':price,'sum':price,'cc':cc,'a':a})
+
+
+def dizhi(request):
+    if request.session.get('uname') is not None:
+        uname = request.session.get('uname')
+        uuu = '<a href="/user/tuichu/">退出</a>'
+        chao = '<a href="/goods/zhanshi/">购物车</a>'
+        zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+        dingdan = '<a href="/goods/dingdan/">全部订单</a>'
+    else:
+        uname = '<a href="/user/dengl/">登录</a>'
+        uuu = '<a href="/user/register/">注册</a>'
+        chao = '<a href="/user/dengl/">购物车</a>'
+        zhongxin = '<a href="/user/dengl/">用户中心</a>'
+        dingdan = '<a href="/user/dengl/">全部订单</a>'
+    dui = UserInfo.objects.filter(uname=uname)
+    cc = dui[0]
+    return render(request,'user_center_site.html',{'dingdan':dingdan,'uname':uname,
+                    'uuu':uuu,'chao':chao,'zhongxin':zhongxin,'cc':cc})
+
+def xiudi(request):
+    name = request.POST.get('name')
+    address = request.POST.get('address')
+    youbian = request.POST.get('youbian')
+    phone = request.POST.get('phone')
+    if(len(phone)) != 11:
+        return HttpResponse("手机号不对")
+    if request.session.get('uname') is not None:
+        uname = request.session.get('uname')
+        uuu = '<a href="/user/tuichu/">退出</a>'
+        chao = '<a href="/goods/zhanshi/">购物车</a>'
+        zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+        dingdan = '<a href="/goods/dingdan/">全部订单</a>'
+    else:
+        uname = '<a href="/user/dengl/">登录</a>'
+        uuu = '<a href="/user/register/">注册</a>'
+        chao = '<a href="/user/dengl/">购物车</a>'
+        zhongxin = '<a href="/user/dengl/">用户中心</a>'
+        dingdan = '<a href="/user/dengl/">全部订单</a>'
+    dui = UserInfo.objects.filter(uname=uname)
+    cc = dui[0]
+    cc.ureceive = name
+    cc.uaddress = address
+    cc.uzip_code = youbian
+    cc.uphone = phone
+    cc.save()
+
+    return render(request,'user_center_site.html',{'dingdan':dingdan,'uname':uname,
+                    'uuu':uuu,'chao':chao,'zhongxin':zhongxin,'cc':cc})
+
+def tijiao(request):
+    if request.session.get('uname') is not None:
+        uname = request.session.get('uname')
+
+    else:
+        uname = '<a href="/user/dengl/">登录</a>'
+    dui = UserInfo.objects.filter(uname=uname)
+    cc = dui[0]
+    if cc.uaddress or cc.uphone or cc.ureceive == '':
+        return HttpResponse('资料不完整')
+    a = request.POST.get('liebiao')
+    price = request.POST.get('price')
+    a = list(a)
+    b = []
+    c = []
+    d = []
+    for i in a:
+        if i not in b:
+            b.append(i)
+    print(b)
+    if len(b) >= 5:
+        b.remove(' ')
+        b.remove(',')
+        b.remove("'")
+        b.remove('[')
+        b.remove(']')
+    else:
+        b.remove("'")
+        b.remove('[')
+        b.remove(']')
+    print(b)
+    suoyou = Gouwu.objects.filter(uname=uname)
+    for i in b:
+        print(i)
+        c.append(suoyou[int(i)])
+
+    suiji = random.randint(10000,99999)
+    XD.objects.create(name=uname,danhao=suiji,zongjia=price)
+    for i in c:
+        Dingdan.objects.create(uname=i.uname,utitle=i.utitle,udanjia=i.udanjia,upic=i.upic
+                               ,uprice=i.uprice,unumber=i.unumber,
+                               ushu=i.ushu,dingdan=suiji,zongjia=price)
+        d.append(i.id)
+    for k in d:
+        Gouwu.objects.filter(id=int(k)).delete()
+
+    print('全都完成了')
+    return redirect('/goods/dingdan/')
+
+def dingdan(request):
+    dlist = []
+    xdlist = []
+    if request.session.get('uname') is not None:
+        uname = request.session.get('uname')
+        uuu = '<a href="/user/tuichu/">退出</a>'
+        chao = '<a href="/goods/zhanshi/">购物车</a>'
+        zhongxin = '<a href="/goods/tiaoyong/">用户中心</a>'
+        dingdan = '<a href="/goods/dingdan/">全部订单</a>'
+    else:
+        uname = '<a href="/user/dengl/">登录</a>'
+        uuu = '<a href="/user/register/">注册</a>'
+        chao = '<a href="/user/dengl/">购物车</a>'
+        zhongxin = '<a href="/user/dengl/">用户中心</a>'
+        dingdan = '<a href="/user/dengl/">全部订单</a>'
+
+    xd = XD.objects.filter(name=uname).values_list('danhao')
+    print(dlist)
+    print(xd)
+    for dd in xd:
+        for xx in dd:
+            xdlist.append(xx)
+    print(xdlist)
+    try:
+
+
+        for i in xdlist:
+            dui = Dingdan.objects.filter(uname=uname,dingdan=i)
+            dlist.append({i:dui})
+        print(dlist)
+
+        return render(request, 'user_center_order.html',
+                  {'dingdan':dingdan,'uname': uname, 'uuu': uuu,'chao': chao, 'zhongxin': zhongxin,
+                'dlist':dlist})
+    except:
+        return HttpResponse('您还没有订单')

@@ -15,6 +15,8 @@
 					欢迎您：<em>{{ uname|safe }}</em>
 				</div>
 				<div class="login_btn fl">
+                    <a href="/goods/index">商城首页</a>
+                <span>|</span>
 					{{ uname|safe }}
 					<span>|</span>
 					{{ uuu|safe }}
@@ -25,7 +27,7 @@
 					<span>|</span>
 					{{ chao|safe }}
 					<span>|</span>
-					<a href="user_center_order.html">我的订单</a>
+					{{ dingdan|safe }}
 				</div>
 			</div>
 		</div>
@@ -44,10 +46,10 @@
 
 	<div class="common_list_con clearfix">
 		<dl>
-			<dt>寄送到：</dt>
-			<dd><input type="radio" name="" checked="">北京市 大兴区 某某学校 （XXXX 收） 183****0987</dd>
+			<dt>寄送到：{{cc.uaddress}}&nbsp;&nbsp;&nbsp;收件人:{{ cc.ureceive }}&nbsp;&nbsp;&nbsp;电话:{{ cc.uphone}}</dt>
+			<dd><input type="radio" name="" checked=""></dd>
 		</dl>
-		<a href="user_center_site.html" class="edit_site">编辑收货地址</a>
+		<a href="/goods/dizhi/" class="edit_site">编辑收货地址</a>
 
 	</div>
 
@@ -101,7 +103,12 @@
 	</div>
 
 	<div class="order_submit clearfix">
-		<a href="javascript:;" id="order_btn">提交订单</a>
+        <form action="/goods/tijiao/" method="post">
+            {% csrf_token %}
+            <input type="text" name="liebiao" value="{{ a }}" style="display: none">
+            <input type="text" name="price" value="{{ sum }}" style="display: none">
+		<input type="submit" id="order_btn" value="提交订单" style="position: relative;left: 1125px;">
+        </form>
 	</div>
 
 	<div class="footer">

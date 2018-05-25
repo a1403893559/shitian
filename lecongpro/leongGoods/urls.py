@@ -15,5 +15,9 @@ urlpatterns = [
     url(r'chuli/$',views.chuli),
     url(r'tiaoyong/$',views.tiaoyong),
     url(r'gwjs/$',views.gwjs),
+    url('dizhi/$',views.dizhi),
+    url(r'xiudi/$',views.xiudi),
+    url(r'tijiao/$',views.tijiao),
+    url(r'dingdan/$',views.dingdan),
 
 ]

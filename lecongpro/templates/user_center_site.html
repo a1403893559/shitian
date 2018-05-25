@@ -12,20 +12,22 @@
 			<div class="welcome fl">欢迎来到天天生鲜!</div>
 			<div class="fr">
 				<div class="login_info fl">
-					欢迎您：<em>张 山</em>
+					欢迎您：<em>{{ uname|safe }}</em>
 				</div>
 				<div class="login_btn fl">
-					<a href="login.html">登录</a>
+                    <a href="/goods/index">商城首页</a>
+                <span>|</span>
+					{{ uname|safe }}
 					<span>|</span>
-					<a href="register.html">注册</a>
+					{{ uuu|safe }}
 				</div>
 				<div class="user_link fl">
 					<span>|</span>
-					<a href="user_center_info.html">用户中心</a>
+					{{ zhongxin|safe }}
 					<span>|</span>
-					<a href="cart.html">我的购物车</a>
+					{{ chao|safe }}
 					<span>|</span>
-					<a href="user_center_order.html">我的订单</a>
+					{{ dingdan|safe }}
 				</div>
 			</div>
 		</div>		
@@ -44,7 +46,7 @@
 		<div class="left_menu_con clearfix">
 			<h3>用户中心</h3>
 			<ul>
-				<li><a href="user_center_info.html">· 个人信息</a></li>
+				<li><a href="/goods/tiaoyong/">· 个人信息</a></li>
 				<li><a href="user_center_order.html">· 全部订单</a></li>
 				<li><a href="user_center_site.html" class="active">· 收货地址</a></li>
 			</ul>
@@ -53,28 +55,29 @@
 				<h3 class="common_title2">收货地址</h3>
 				<div class="site_con">
 					<dl>
-						<dt>当前地址：</dt>
-						<dd>北京市 海淀区 东北旺西路8号中关村软件园 （李思 收） 182****7528</dd>
+						<dt>&nbsp;当前地址：{{ cc.uaddress }}&nbsp;邮编:{{ cc.uzip_code }}&nbsp;收件人:{{ cc.ureceive }}&nbsp;手机:{{ cc.uphone }}</dt>
+						<dd></dd>
 					</dl>					
 				</div>
 				<h3 class="common_title2">编辑地址</h3>
 				<div class="site_con">
-					<form>
+					<form action="/goods/xiudi/" method="post">
+                        {% csrf_token %}
 						<div class="form_group">
 							<label>收件人：</label>
-							<input type="text" name="">
+							<input type="text" name="name">
 						</div>
 						<div class="form_group form_group2">
 							<label>详细地址：</label>
-							<textarea class="site_area"></textarea>
+							<textarea class="site_area" name="address"></textarea>
 						</div>
 						<div class="form_group">
 							<label>邮编：</label>
-							<input type="text" name="">
+							<input type="text" name="youbian">
 						</div>
 						<div class="form_group">
 							<label>手机：</label>
-							<input type="text" name="">
+							<input type="text" name="phone" onkeyup="value=value.replace(/[^1234567890-]+/g,'')">
 						</div>
 
 						<input type="submit" name="" value="提交" class="info_submit">

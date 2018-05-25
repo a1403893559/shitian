@@ -35,4 +35,18 @@ class Gouwu(models.Model):
     udanjia = models.DecimalField(max_digits=5,decimal_places=2)
     upic = RichTextUploadingField()
 
+class Dingdan(models.Model):
+    uname = models.CharField(max_length=40)
+    utitle = models.CharField(max_length=40)
+    unumber = models.IntegerField()
+    ushu = models.IntegerField()
+    uprice = models.DecimalField(max_digits=5, decimal_places=2)
+    udanjia = models.DecimalField(max_digits=5, decimal_places=2)
+    upic = RichTextUploadingField()
+    dingdan = models.IntegerField()
+    zongjia = models.DecimalField(max_digits=5, decimal_places=2)
 
+class XD(models.Model):
+    name = models.CharField(max_length=40)
+    danhao = models.IntegerField()
+    zongjia = models.DecimalField(max_digits=5, decimal_places=2)

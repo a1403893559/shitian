@@ -80,7 +80,9 @@ def login(request): #登录判断
             request.session['uname'] = uname
             return redirect('/goods/index/')
         else:
-            return render(request,'存在.html')
+            return HttpResponse("密码错误")
+    else:
+        return HttpResponse("不存在")
 
 def tuichu(request):
     request.session.flush()
