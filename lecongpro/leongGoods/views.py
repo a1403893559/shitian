@@ -644,46 +644,49 @@ def tijiao(request):
         uname = '<a href="/user/dengl/">登录</a>'
     dui = UserInfo.objects.filter(uname=uname)
     cc = dui[0]
-    if cc.uaddress or cc.uphone or cc.ureceive == '':
+    aa = cc.uaddress
+    print(aa)
+    if cc.uaddress == '无' or cc.ureceive == '无' or cc.uphone == '无':
         return HttpResponse('资料不完整')
-    a = request.POST.get('liebiao')
-    price = request.POST.get('price')
-    a = list(a)
-    b = []
-    c = []
-    d = []
-    for i in a:
-        if i not in b:
-            b.append(i)
-    print(b)
-    if len(b) >= 5:
-        b.remove(' ')
-        b.remove(',')
-        b.remove("'")
-        b.remove('[')
-        b.remove(']')
     else:
-        b.remove("'")
-        b.remove('[')
-        b.remove(']')
-    print(b)
-    suoyou = Gouwu.objects.filter(uname=uname)
-    for i in b:
-        print(i)
-        c.append(suoyou[int(i)])
+        a = request.POST.get('liebiao')
+        price = request.POST.get('price')
+        a = list(a)
+        b = []
+        c = []
+        d = []
+        for i in a:
+            if i not in b:
+                b.append(i)
 
-    suiji = random.randint(10000,99999)
-    XD.objects.create(name=uname,danhao=suiji,zongjia=price)
-    for i in c:
-        Dingdan.objects.create(uname=i.uname,utitle=i.utitle,udanjia=i.udanjia,upic=i.upic
+        if len(b) >= 5:
+            b.remove(' ')
+            b.remove(',')
+            b.remove("'")
+            b.remove('[')
+            b.remove(']')
+        else:
+            b.remove("'")
+            b.remove('[')
+            b.remove(']')
+
+        suoyou = Gouwu.objects.filter(uname=uname)
+        for i in b:
+
+            c.append(suoyou[int(i)])
+
+        suiji = random.randint(10000,99999)
+        XD.objects.create(name=uname,danhao=suiji,zongjia=price)
+        for i in c:
+            Dingdan.objects.create(uname=i.uname,utitle=i.utitle,udanjia=i.udanjia,upic=i.upic
                                ,uprice=i.uprice,unumber=i.unumber,
                                ushu=i.ushu,dingdan=suiji,zongjia=price)
-        d.append(i.id)
-    for k in d:
-        Gouwu.objects.filter(id=int(k)).delete()
+            d.append(i.id)
+        for k in d:
+            Gouwu.objects.filter(id=int(k)).delete()
 
-    print('全都完成了')
-    return redirect('/goods/dingdan/')
+        print('全都完成了')
+        return redirect('/goods/dingdan/')
 
 def dingdan(request):
     dlist = []
