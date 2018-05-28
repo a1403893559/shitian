@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>展示</title>
+</head>
+<a href="/goods/tiao/">去留言</a>
+账户名:{{ uname }}
+{% for i in cc %}
+    <hr>
+    <h2>名字为:{{ i.name }}的用户</h2>
+    <br>
+
+    <h4>留言:{{ i.liuyan }}</h4>
+    <hr>
+{% endfor %}
+</body>
+</html>
